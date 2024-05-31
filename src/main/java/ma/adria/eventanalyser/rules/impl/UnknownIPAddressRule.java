@@ -1,7 +1,7 @@
 package ma.adria.eventanalyser.rules.impl;
 
 import com.speedment.jpastreamer.application.JPAStreamer;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.adria.eventanalyser.dto.events.EventDto;
 import ma.adria.eventanalyser.model.Event;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UnknownIPAddressRule implements FraudRule {
 
     private static final String RULE_NAME = "Unknown IP Address";

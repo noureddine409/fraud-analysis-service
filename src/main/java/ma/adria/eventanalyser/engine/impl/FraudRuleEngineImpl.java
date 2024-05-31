@@ -1,6 +1,6 @@
 package ma.adria.eventanalyser.engine.impl;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import ma.adria.eventanalyser.dto.events.EventDto;
 import ma.adria.eventanalyser.engine.FraudRuleEngine;
 import ma.adria.eventanalyser.rules.FraudRule;
@@ -13,7 +13,8 @@ import java.util.List;
 
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
+
 public class FraudRuleEngineImpl implements FraudRuleEngine {
 
     private final List<FraudRule> fraudRules; // inject all FraudRule implementations
