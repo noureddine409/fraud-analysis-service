@@ -3,7 +3,7 @@ package ma.adria.eventanalyser.messaging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.adria.eventanalyser.dto.events.EventDto;
 import ma.adria.eventanalyser.engine.FraudRuleEngine;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class KafkaConsumer {
 
     private final ObjectMapper objectMapper;
