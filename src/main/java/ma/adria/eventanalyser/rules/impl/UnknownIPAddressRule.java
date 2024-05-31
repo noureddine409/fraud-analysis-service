@@ -40,7 +40,7 @@ public class UnknownIPAddressRule implements FraudRule {
         final Long eventId = event.getId();
         // Check if the username has connected from the given IP address before
         boolean isUnknownIPAddress = jpaStreamer.stream(Event.class)
-                .filter(e -> !e.getId().equals(eventId)) // Exclude events with the same ID
+                .filter(e -> !e.getId().equals(eventId)) // Exclude event with the same ID
                 .noneMatch(e -> e.getUsername().equals(username) && e.getLocation().getIpAddress().equals(ipAddress));
 
         // Build the result with the appropriate reason
