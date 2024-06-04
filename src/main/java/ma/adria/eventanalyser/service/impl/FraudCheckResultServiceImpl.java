@@ -23,8 +23,9 @@ public class FraudCheckResultServiceImpl implements FraudCheckResultService {
     @Transactional
     public FraudCheckResult save(FraudRule.FraudDetectionResult fraudDetectionResult) throws EventNotFoundException {
         // Load the Event entity from the database using its ID
-        Event event = eventRepository.findById(fraudDetectionResult.getEventId())
-                .orElseThrow(() -> new EventNotFoundException("Event not found with ID: " + fraudDetectionResult.getEventId()));
+        final Long eventId = fraudDetectionResult.getEventId();
+        Event event = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EventNotFoundException("Event with id %s not found", eventId));
         // Create FraudCheckResult and associate it with the loaded Event
         FraudCheckResult preparedResult = FraudCheckResult.builder()
                 .event(event) // Associate the event
