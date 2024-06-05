@@ -11,6 +11,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 
+/**
+ * A fraud detection rule that flags events with unknown device.
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -22,7 +25,12 @@ public class UnknownDeviceRule implements FraudRule {
     private final ModelMapper modelMapper;
 
     private final JPAStreamer jpaStreamer;
-
+    /**
+     * A fraud detection rule that flags events where a user connects from a new Device.
+     *
+     * @param eventDto the event to evaluate
+     * @return a {@link FraudDetectionResult} indicating if the event is fraudulent and the reason
+     */
     @Override
     public FraudDetectionResult evaluate(EventDto eventDto) {
         // map from dto to event entity

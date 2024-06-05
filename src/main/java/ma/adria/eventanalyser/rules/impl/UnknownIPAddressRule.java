@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 public class UnknownIPAddressRule implements FraudRule {
-
     private static final String RULE_NAME = "Unknown IP Address";
 
     private final ModelMapper modelMapper;
@@ -31,6 +30,7 @@ public class UnknownIPAddressRule implements FraudRule {
      */
     @Override
     public FraudDetectionResult evaluate(EventDto eventDto) {
+
 
         // map from dto to event entity
         final Event event = modelMapper.map(eventDto, Event.class);
