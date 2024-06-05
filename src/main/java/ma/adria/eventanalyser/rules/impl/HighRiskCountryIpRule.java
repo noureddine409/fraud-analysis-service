@@ -17,9 +17,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class SuspiciousIpAddressRule implements FraudRule {
+public class HighRiskCountryIpRule implements FraudRule {
 
-    public static final String RULE_NAME = "Suspicious IP Address";
+    public static final String RULE_NAME = "High Risk Country IP Rule";
 
     private final IpCountryService ipCountryService;
 
@@ -27,11 +27,10 @@ public class SuspiciousIpAddressRule implements FraudRule {
 
     @Override
     public FraudDetectionResult evaluate(EventDto eventDto) {
-        final String username = eventDto.getUsername();
         final LocationDto location = eventDto.getLocation();
         final Long eventId = eventDto.getId();
-        if (username == null || location == null || location.getIpAddress() == null) {
-            log.warn("Invalid event data: username, location or ipAddress is null");
+        if (location == null || location.getIpAddress() == null) {
+            log.warn("Invalid event data: location or ipAddress is null");
             return FraudDetectionResult.builder()
                     .ruleName(RULE_NAME)
                     .eventId(eventId)
