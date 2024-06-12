@@ -1,11 +1,11 @@
 package ma.adria.eventanalyser.service;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ma.adria.eventanalyser.exception.RuleConfigNotFoundException;
 
-import java.util.Map;
+import java.util.List;
 
 
 /**
@@ -26,10 +26,25 @@ public interface RuleConfigService {
      * Class representing the configuration for a specific rule.
      */
     @Data
+    @NoArgsConstructor
     @AllArgsConstructor
-    @Builder
     class RuleConfig {
-        private String ruleCode;
-        private Map<String, Object> params;
+        private String code;
+        private String name;
+        private String description;
+        private List<Parameter> parameters;
+
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class Parameter {
+            private String code;
+            private String value;
+            private String description;
+            private String codeBank;
+            private String countryCode;
+            private String segment;
+        }
+
     }
 }
