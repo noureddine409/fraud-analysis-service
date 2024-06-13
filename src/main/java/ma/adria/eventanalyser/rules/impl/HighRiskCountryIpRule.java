@@ -11,7 +11,9 @@ import ma.adria.eventanalyser.service.IpCountryService;
 import ma.adria.eventanalyser.service.RuleConfigService;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A fraud detection rule that flags events originated from high-risk countries.
@@ -22,19 +24,19 @@ import java.util.List;
 public class HighRiskCountryIpRule implements FraudRule {
 
     public static final String RULE_NAME = "High Risk Country IP Rule";
-    public static final String RULE_CODE = "R-01";
+    public static final String RULE_CODE = "R-001";
 
     private final IpCountryService ipCountryService;
     private final RuleConfigService ruleConfigService;
-
-    List<CountryCode> highRiskCountries = List.of(CountryCode.CO, CountryCode.IN, CountryCode.TN);
 
     @Override
     public FraudDetectionResult evaluate(EventDto eventDto) {
         final Long eventId = eventDto.getId();
 
+        final RuleConfigService.RuleConfig ruleConfig;
+
         try {
-            final RuleConfigService.RuleConfig ruleConfig = ruleConfigService.getRuleConfig(RULE_CODE);
+            ruleConfig = ruleConfigService.getRuleConfig(RULE_CODE);
             log.info("RuleConfig retrieved for ruleCode {}: {}", RULE_CODE, ruleConfig);
         } catch (RuleConfigNotFoundException e) {
             final String errorMessage = String.format("RuleConfig not found for ruleCode %s and eventId %d", RULE_CODE, eventId);
@@ -46,6 +48,28 @@ public class HighRiskCountryIpRule implements FraudRule {
                     .reason(errorMessage)
                     .build();
         }
+
+        final List<RuleConfigService.RuleConfig.Parameter> parameters = ruleConfig.getParameters();
+
+        RuleConfigService.RuleConfig.Parameter highRiskCountriesParam = parameters.stream()
+                .filter(p -> "LIST_HIGH_RISK_COUNTRIES".equals(p.getCode()))
+                .findFirst()
+                .orElse(null);
+
+        if (Objects.isNull(highRiskCountriesParam)) {
+            return FraudDetectionResult.builder()
+                    .ruleName(RULE_NAME)
+                    .eventId(eventId)
+                    .isFraud(false)
+                    .reason("parameter LIST_HIGH_RISK_COUNTRIES not found")
+                    .build();
+        }
+
+        List<CountryCode> highRiskCountries = Arrays.stream(highRiskCountriesParam.getValue().split(","))
+                .map(CountryCode::getByAlpha2Code) // Adjust if the method needs to be non-static
+                .filter(Objects::nonNull) // Filter out any null values
+                .toList();
+
 
         final LocationDto location = eventDto.getLocation();
         if (location == null || location.getIpAddress() == null) {
