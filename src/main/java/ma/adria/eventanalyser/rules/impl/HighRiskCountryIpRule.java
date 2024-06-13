@@ -66,10 +66,17 @@ public class HighRiskCountryIpRule implements FraudRule {
         }
 
         List<CountryCode> highRiskCountries = Arrays.stream(highRiskCountriesParam.getValue().split(","))
-                .map(CountryCode::getByAlpha2Code) // Adjust if the method needs to be non-static
-                .filter(Objects::nonNull) // Filter out any null values
+                .map(String::toUpperCase)
+                .map(
+                        code -> {
+                            CountryCode countryCode = CountryCode.getByAlpha2Code(code);
+                            if (countryCode == null) {
+                                log.warn("Cannot parse the country code {}", code);
+                            }
+                            return countryCode;
+                        })
+                .filter(Objects::nonNull)
                 .toList();
-
 
         final LocationDto location = eventDto.getLocation();
         if (location == null || location.getIpAddress() == null) {
