@@ -7,6 +7,7 @@ import ma.adria.eventanalyser.dto.events.EventDto;
 import ma.adria.eventanalyser.model.Device;
 import ma.adria.eventanalyser.model.Event;
 import ma.adria.eventanalyser.rules.FraudRule;
+import ma.adria.eventanalyser.utils.RuleConfigUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +22,9 @@ public class UnknownDeviceRule implements FraudRule {
 
     private static final String RULE_NAME = "Unknown device";
 
-
     private final ModelMapper modelMapper;
-
     private final JPAStreamer jpaStreamer;
+
     /**
      * A fraud detection rule that flags events where a user connects from a new Device.
      *
@@ -37,19 +37,13 @@ public class UnknownDeviceRule implements FraudRule {
         Event event = modelMapper.map(eventDto, Event.class);
 
         final Long eventId = event.getId();
-
         final String username = event.getUsername();
         final Device device = event.getDevice();
 
         // Check for null values
         if (username == null || device == null || device.getFingerprint() == null) {
             log.warn("Invalid event data: username, device or device fingerprint is null");
-            return FraudDetectionResult.builder()
-                    .ruleName(RULE_NAME)
-                    .eventId(eventId)
-                    .isFraud(false)
-                    .reason("Invalid event data")
-                    .build();
+            return RuleConfigUtils.buildResult(eventId, RULE_NAME, false, "Invalid event data");
         }
 
         boolean isUnknownDevice = jpaStreamer.stream(Event.class)
@@ -60,11 +54,7 @@ public class UnknownDeviceRule implements FraudRule {
                 });
 
         // Build the result with the appropriate reason
-        return FraudDetectionResult.builder()
-                .ruleName(RULE_NAME)
-                .eventId(eventId)
-                .isFraud(isUnknownDevice)
-                .reason(isUnknownDevice ? "Unknown Device detected" : "Device is known")
-                .build();
+        final String reason = isUnknownDevice ? "Unknown Device detected" : "Device is known";
+        return RuleConfigUtils.buildResult(eventId, RULE_NAME, isUnknownDevice, reason);
     }
 }

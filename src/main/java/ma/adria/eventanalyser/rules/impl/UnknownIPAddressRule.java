@@ -7,6 +7,7 @@ import ma.adria.eventanalyser.dto.events.EventDto;
 import ma.adria.eventanalyser.model.Event;
 import ma.adria.eventanalyser.model.Location;
 import ma.adria.eventanalyser.rules.FraudRule;
+import ma.adria.eventanalyser.utils.RuleConfigUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -42,12 +43,8 @@ public class UnknownIPAddressRule implements FraudRule {
 
         if (location == null || username == null || location.getIpAddress() == null) {
             log.warn("Invalid event data: username, location is null");
-            return FraudDetectionResult.builder()
-                    .ruleName(RULE_NAME)
-                    .eventId(eventId)
-                    .isFraud(false)
-                    .reason("Invalid event data")
-                    .build();
+            return RuleConfigUtils.buildResult(eventId, RULE_NAME, false, "Invalid event data");
+
         }
 
         // Check if the username has connected from the given IP address before
@@ -56,11 +53,8 @@ public class UnknownIPAddressRule implements FraudRule {
                 .noneMatch(e -> e.getUsername().equals(username) && e.getLocation().getIpAddress().equals(location.getIpAddress()));
 
         // Build the result with the appropriate reason
-        return FraudDetectionResult.builder()
-                .ruleName(RULE_NAME)
-                .eventId(eventId)
-                .isFraud(isUnknownIPAddress)
-                .reason(isUnknownIPAddress ? "Unknown IP address detected" : "IP address is known")
-                .build();
+        String reason = isUnknownIPAddress ? "Unknown IP address detected" : "IP address is known";
+        return RuleConfigUtils.buildResult(eventId, RULE_NAME, isUnknownIPAddress, reason);
+
     }
 }
