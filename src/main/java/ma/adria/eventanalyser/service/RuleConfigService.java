@@ -1,6 +1,7 @@
 package ma.adria.eventanalyser.service;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ma.adria.eventanalyser.exception.RuleConfigNotFoundException;
@@ -28,6 +29,7 @@ public interface RuleConfigService {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
+    @Builder
     class RuleConfig {
         private String code;
         private String name;
@@ -37,6 +39,7 @@ public interface RuleConfigService {
         @Data
         @NoArgsConstructor
         @AllArgsConstructor
+        @Builder
         public static class Parameter {
             private String code;
             private String value;
