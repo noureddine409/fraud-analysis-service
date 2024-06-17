@@ -31,7 +31,10 @@ public class UnknownIPAddressRule implements FraudRule {
      */
     @Override
     public FraudDetectionResult evaluate(EventDto eventDto) {
-
+        if (eventDto == null) {
+            log.warn("Invalid event data: eventDto is null");
+            return RuleConfigUtils.buildResult(null, RULE_NAME, false, "eventDto is null");
+        }
 
         // map from dto to event entity
         final Event event = modelMapper.map(eventDto, Event.class);
