@@ -41,4 +41,14 @@ public class RuleConfigUtils {
                 .reason(reason)
                 .build();
     }
+
+    public RuleConfig.Parameter getParam(List<RuleConfig.Parameter> parameters, String param, String bankCode, String segment) {
+        return parameters.stream()
+                .filter(p -> param.equals(p.getCode())
+                        && bankCode.equals(p.getCodeBank())
+                        && segment.equals(p.getSegment()))
+                .findFirst()
+                .orElse(null);
+    }
+
 }

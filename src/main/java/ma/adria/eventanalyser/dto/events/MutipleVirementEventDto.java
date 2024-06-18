@@ -18,7 +18,7 @@ public class MutipleVirementEventDto extends VirementDto {
     private List<CreditorDto> creditors;
 
     @Override
-    BigDecimal getAmount() {
+    public BigDecimal getAmount() {
         return creditors.stream()
                 .map(CreditorDto::getAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);

@@ -16,7 +16,7 @@ public class ToBeneficiaryVirementEventDto extends VirementDto {
     private CreditorDto creditor;
 
     @Override
-    BigDecimal getAmount() {
+    public BigDecimal getAmount() {
         return this.creditor.getAmount();
     }
 }

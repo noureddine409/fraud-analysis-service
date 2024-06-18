@@ -19,6 +19,6 @@ public abstract class VirementDto extends EventDto {
     private String currency;
     private ExecutionFrequencyDto executionFrequency;
 
-    abstract BigDecimal getAmount();
+    public abstract BigDecimal getAmount();
 
 }
