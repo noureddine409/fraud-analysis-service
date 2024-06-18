@@ -3,6 +3,7 @@ package ma.adria.eventanalyser.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @Entity
+@SuperBuilder
 public class FraudCheckResult extends BaseEntity {
     private String ruleName;
 
@@ -20,13 +22,4 @@ public class FraudCheckResult extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "event_id", nullable = false, updatable = false)
     private Event event;
-
-    @Builder
-    public FraudCheckResult(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String ruleName, boolean fraud, String reason, Event event) {
-        super(id, createdAt, updatedAt);
-        this.ruleName = ruleName;
-        this.fraud = fraud;
-        this.reason = reason;
-        this.event = event;
-    }
 }

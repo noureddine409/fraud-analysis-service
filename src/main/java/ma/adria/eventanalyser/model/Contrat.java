@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -13,13 +14,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "contrat")
+@SuperBuilder
 public class Contrat extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String contratId;
 
-    @Builder
-    public Contrat(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String contratID) {
-        super(id, createdAt, updatedAt);
-        this.contratId = contratID;
-    }
 }

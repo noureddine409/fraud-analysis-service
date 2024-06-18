@@ -1,5 +1,6 @@
 package ma.adria.eventanalyser.model.event;
 
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -19,10 +20,9 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "mutipleVirement_event")
-
 public class MutipleVirementEvent extends Virement {
     private int nombreOperations;
     @OneToMany(cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Creditor> creditors;
-
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.model.Account;
 import ma.adria.eventanalyser.model.BeneficiaryInfo;
 import ma.adria.eventanalyser.model.Event;
@@ -18,6 +19,7 @@ import ma.adria.eventanalyser.model.Event;
 @NoArgsConstructor
 @Entity
 @Table(name = "gestionBenificiaire_event")
+@SuperBuilder
 public class BeneficiaryInfoEvent extends Event {
     private String action;
     @OneToOne(cascade = CascadeType.ALL)

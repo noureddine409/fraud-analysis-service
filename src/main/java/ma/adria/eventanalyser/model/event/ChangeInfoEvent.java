@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.model.Event;
 
 @Getter
@@ -14,6 +15,7 @@ import ma.adria.eventanalyser.model.Event;
 @NoArgsConstructor
 @Entity
 @Table(name = "changeInfo_event")
+@SuperBuilder
 public class ChangeInfoEvent extends Event {
     private boolean emailChanged;
     private boolean phoneChanged;

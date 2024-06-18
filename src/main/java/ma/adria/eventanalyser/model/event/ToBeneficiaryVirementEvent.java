@@ -8,9 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import ma.adria.eventanalyser.model.*;
-
-import java.time.LocalDateTime;
+import lombok.experimental.SuperBuilder;
+import ma.adria.eventanalyser.model.Creditor;
+import ma.adria.eventanalyser.model.Virement;
 
 @Getter
 @Setter
@@ -18,13 +18,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "toBeneficiaryVirementEvent_event")
-
+@SuperBuilder
 public class ToBeneficiaryVirementEvent extends Virement {
     @OneToOne(cascade = CascadeType.ALL)
     private Creditor creditor;
-
-    public ToBeneficiaryVirementEvent(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String reference, LocalDateTime timestamp, Canal canal, LocalDateTime activityTime, String username, String bankCode, String countryCode, String segment, Location location, Contrat contrat, Device device, String motif, ExecutionDateType type, String curency, ExecutionFrequency executionFrequency, Creditor creditor) {
-        super(id, createdAt, updatedAt, reference, timestamp, canal, activityTime, username, bankCode, countryCode, segment, location, contrat, device, motif, type, curency, executionFrequency);
-        this.creditor = creditor;
-    }
 }

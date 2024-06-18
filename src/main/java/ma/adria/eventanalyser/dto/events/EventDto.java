@@ -4,6 +4,7 @@ package ma.adria.eventanalyser.dto.events;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.dto.ContratDto;
 import ma.adria.eventanalyser.dto.DeviceDto;
 import ma.adria.eventanalyser.dto.LocationDto;
@@ -41,6 +42,7 @@ import java.time.LocalDateTime;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public abstract class EventDto {
     private Long id;
     private LocalDateTime createdAt;
@@ -57,6 +59,4 @@ public abstract class EventDto {
     private ContratDto contrat;
     private DeviceDto device;
     private String motif;
-
-
 }

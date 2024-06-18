@@ -4,9 +4,13 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
 @Getter
 @Setter
@@ -14,14 +18,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "creditor")
-public class Creditor extends BaseEntity{
+@SuperBuilder
+public class Creditor extends BaseEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private Account account;
-    private String amount;
-
-    @Builder
-    public Creditor(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, Account account) {
-        super(id, createdAt, updatedAt);
-        this.account = account;
-    }
+    private BigDecimal amount;
 }

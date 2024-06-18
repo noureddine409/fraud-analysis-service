@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "location")
+@SuperBuilder
 public class Location extends BaseEntity {
     private String ipAddress;
     private String ipAddress2;
@@ -21,11 +23,4 @@ public class Location extends BaseEntity {
     @ManyToOne(cascade = CascadeType.ALL)
     private Geolocation geolocation;
 
-    @Builder
-    public Location(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String ipAddress, String ipAddress2, Geolocation geolocation) {
-        super(id, createdAt, updatedAt);
-        this.ipAddress = ipAddress;
-        this.ipAddress2 = ipAddress2;
-        this.geolocation = geolocation;
-    }
 }

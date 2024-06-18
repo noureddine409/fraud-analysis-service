@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "device")
+@SuperBuilder
 public class Device extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String fingerprint;
@@ -23,15 +25,5 @@ public class Device extends BaseEntity {
     private String manufacturer;
     private String model;
 
-    @Builder
-    public Device(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, String fingerprint, String deviceType, String browser, String browserVersion, String os, String manufacturer, String model) {
-        super(id, createdAt, updatedAt);
-        this.fingerprint = fingerprint;
-        this.deviceType = deviceType;
-        this.browser = browser;
-        this.browserVersion = browserVersion;
-        this.os = os;
-        this.manufacturer = manufacturer;
-        this.model = model;
-    }
+
 }

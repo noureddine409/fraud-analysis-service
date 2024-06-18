@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.model.Event;
 
 @Getter
@@ -14,5 +15,6 @@ import ma.adria.eventanalyser.model.Event;
 @NoArgsConstructor
 @Entity
 @Table(name = "authentication_event")
+@SuperBuilder
 public class AuthenticationEvent extends Event {
 }

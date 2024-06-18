@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.model.Account;
 import ma.adria.eventanalyser.model.Event;
 
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "payementFacture_event")
+@SuperBuilder
 public class PayementFactureEvent extends Event {
     private String creancier;
     private String creance;

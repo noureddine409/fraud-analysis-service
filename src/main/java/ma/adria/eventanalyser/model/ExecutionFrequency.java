@@ -1,8 +1,13 @@
 package ma.adria.eventanalyser.model;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -12,18 +17,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "executionFrequency")
-public class ExecutionFrequency extends BaseEntity{
+@SuperBuilder
+public class ExecutionFrequency extends BaseEntity {
     private ExecutionFrequencyType frequency;
     private LocalDateTime firstTransactionDateTime;
 
-    @Builder
-    public ExecutionFrequency(Long id, LocalDateTime createdAt, LocalDateTime updatedAt, ExecutionFrequencyType frequency, LocalDateTime firstTransactionDateTime) {
-        super(id, createdAt, updatedAt);
-        this.frequency = frequency;
-        this.firstTransactionDateTime = firstTransactionDateTime;
-    }
-
-    public  enum ExecutionFrequencyType{
-        YEARLY, MONTHLY ,WEEKLY, DAILY
+    public enum ExecutionFrequencyType {
+        YEARLY, MONTHLY, WEEKLY
     }
 }

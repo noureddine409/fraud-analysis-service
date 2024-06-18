@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.model.Account;
 import ma.adria.eventanalyser.model.Event;
 
@@ -15,6 +16,7 @@ import ma.adria.eventanalyser.model.Event;
 @NoArgsConstructor
 @Entity
 @Table(name = "remiseOrdre_event")
+@SuperBuilder
 public class RemiseOrdreEvent extends Event {
     private String natureRemise;
     private String FormatRemiseOrdre;
