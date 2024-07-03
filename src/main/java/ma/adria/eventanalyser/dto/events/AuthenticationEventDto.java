@@ -1,9 +1,6 @@
 package ma.adria.eventanalyser.dto.events;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import ma.adria.eventanalyser.dto.ContratDto;
 import ma.adria.eventanalyser.dto.DeviceDto;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString(callSuper = true)
 @SuperBuilder
+@NoArgsConstructor
 public class AuthenticationEventDto extends EventDto {
 
 }
